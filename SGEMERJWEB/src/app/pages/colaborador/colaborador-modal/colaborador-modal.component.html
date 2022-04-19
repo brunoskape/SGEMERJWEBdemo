@@ -1,0 +1,13 @@
+<p>O registro que está sendo salvo se trata de uma ATUALIZAÇÃO dos dados ou uma RETIFICAÇÃO?</p>
+<span>Caso seja uma RETIFICAÇÃO, informe:</span> 
+<form [formGroup]="modelForm">   
+  <div class="form-group col-md-12">             
+    <div class="form-group col-md-10">
+      <select class="form-control" auto-contraste altera-fonte formControlName="protocolo">
+        <option *ngFor="let item of protocolos" [value]="item.idDescricaoText">
+          {{item.idDescricaoText}}
+        </option>
+      </select>
+    </div>
+  </div>
+</form> 

@@ -1,0 +1,96 @@
+<div class="card mb-3" auto-contraste>
+    <div class="card-header" auto-contraste-destaque altera-fonte>
+        <h4>Setores Cadastrados</h4>
+    </div>
+    <div class="card-body">
+        <div class="form-row d-flex justify-content-center">
+            <div class="form-group ">
+                <label auto-contraste altera-fonte class="form-control-plaintext">Pesquisar</label>
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control text-uppercase" placeholder="Sigla" [(ngModel)]="filtroSigla"
+                    name="sigla" [maxLength]="8" auto-contraste altera-fonte>
+            </div>
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" placeholder="Descrição" [(ngModel)]="filtroDescricao"
+                    name="descricao" auto-contraste altera-fonte>
+            </div>
+            <div class="form-group col-md-5">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3" (click)="search()">
+                    <fa-icon class="imgBtn" icon="search"></fa-icon>&nbsp;Consultar
+                </button>
+                <button auto-contraste-destaque altera-fonte type="button" class="btn btn-primary  ml-3"
+                    (click)="clear()">
+                    <fa-icon class="imgBtn" icon="eraser"></fa-icon>&nbsp;Limpar
+                </button>
+                <button auto-contraste-destaque altera-fonte class="btn btn-info ml-3" (click)="new()">
+                    <fa-icon class="imgBtn" icon="plus"></fa-icon>&nbsp;Inserir
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive-md" *ngIf="setores">
+    <table class="table table-striped">
+        <thead class="thead-light" >
+            <tr>
+                <th  auto-contraste-destaque altera-fonte class="w-20" scope="col-2" (click)="sort('sigla')">Sigla&nbsp;<fa-icon icon="sort"></fa-icon>
+                </th>
+                <th auto-contraste-destaque altera-fonte class="w-40" scope="col-4" (click)="sort('descricao')">Descrição&nbsp;<fa-icon icon="sort">
+                    </fa-icon>
+                </th>
+                <th auto-contraste-destaque altera-fonte class="w-10 text-center" (click)="sort('ativo')" scope="col-1">Ativo&nbsp;<fa-icon icon="sort">
+                    </fa-icon>
+                </th>
+                <th auto-contraste-destaque altera-fonte class="w-20 text-center" scope="col-2">Ação</th>
+            </tr>
+        </thead>
+        <tbody auto-contraste altera-fonte >
+            <tr *ngIf="setores.length == 0">
+                <td colspan="4" class="bg-secondary text-center text-white font-weight-bold">
+                    <span>Não existe registros com os dados informado</span>
+                </td>
+            </tr>
+            <tr *ngFor="let setor of  setores | orderBy:key: desc  | paginate: config">
+                <td>{{setor.sigla }}</td>
+                <td>{{setor.descricao }}</td>
+                <td class="text-center">
+                    <fa-icon [icon]="setor.ativo ? 'toggle-on' : 'toggle-off'" size="lg"
+                        [ngClass]="setor.ativo ? 'text-primary' : 'text-secondary'" auto-contraste>
+                    </fa-icon>
+                </td>
+                <td class="text-center">
+                    <a auto-contraste-destaque class="btn btn-info text-white" (click)="edit(setor)">
+                        <fa-icon class="imgBtn" icon="edit"></fa-icon>&nbsp;Editar
+                    </a>
+                </td>
+            </tr>
+            <tr *ngIf="setores.length != 0">
+                <td colspan="4">
+                    <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="onPageChange($event)">
+                        <ul class="pagination d-flex justify-content-center">
+                            <li class="page-item" [class.disabled]="p.isFirstPage()">
+                                <a auto-contraste-destaque class="page-link page-link-cursor" (click)="p.previous()">
+                                    <fa-icon icon="arrow-circle-left"></fa-icon>
+                                </a>
+                            </li>
+                            <li class="page-item" *ngFor="let page of p.pages"
+                                [class.active]="p.getCurrent() === page.value">
+                                <a auto-contraste-destaque (click)="p.setCurrent(page.value)"
+                                    *ngIf="p.getCurrent() !== page.value" class="page-link page-link-cursor">{{ page.label }}</a>
+                                <div *ngIf="p.getCurrent() === page.value">
+                                    <a auto-contraste-destaque class="page-link  page-link-cursor active">{{ page.label }}</a>
+                                </div>
+                            </li>
+                            <li class="page-item" [class.disabled]="p.isLastPage()">
+                                <a auto-contraste-destaque class="page-link  page-link-cursor" (click)="p.next()">
+                                    <fa-icon icon="arrow-circle-right"></fa-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </pagination-template>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

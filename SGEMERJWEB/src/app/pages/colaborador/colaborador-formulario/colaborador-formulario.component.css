@@ -1,0 +1,25 @@
+  #file{
+    display: none;
+  }
+
+  @media(max-width:1024px) {
+    .imgBtn { font-size: 16px; }
+    .btn { font-size: 0px; }
+}
+
+  .header_accordion[aria-expanded='false'] .text-expanded {
+    display: none;
+  }
+  .header_accordion[aria-expanded='true'] .text-collapsed {
+    display: none;
+  }
+
+  .header_accordion {
+    background-color: transparent;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+    color: #007bff;
+    font-weight: 400;
+  }

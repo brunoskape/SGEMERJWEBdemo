@@ -1,0 +1,1530 @@
+<form [formGroup]="modelForm">
+
+  <a href="#" target="_blank">
+  </a>
+
+  <button auto-contraste-destaque altera-fonte type="button" [disabled]="submittingForm" *ngIf="buscouColaborador"
+    style="position:fixed;width:60px;height:60px;bottom:40px;right:40px;border-radius:50px;font-size:30px;z-index:1000;"
+    class="btn btn-primary  ml-3" (click)="submitForm()">
+    <fa-icon icon="save"></fa-icon>
+  </button>
+
+  <button auto-contraste-destaque altera-fonte type="button" class="btn btn-primary  ml-3" (click)="clear()"
+    *ngIf="buscouColaborador"
+    style="position:fixed;width:60px;height:60px;bottom:40px;right:120px;border-radius:50px;font-size:30px;z-index:1000;">
+    <fa-icon icon="eraser"></fa-icon>
+  </button>
+
+  <div class="card mb-3" auto-contraste>
+    <div class="card-header" auto-contraste-destaque altera-fonte>
+      <h4>{{pageTitle}}</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-row d-flex justify-content-center">
+        <div class="form-group col-md-3" formGroupName="tipoColaborador">
+          <select class="form-control" auto-contraste altera-fonte formControlName="id"
+            [attr.disabled]="buscouColaborador ? true : null">
+            <option *ngFor="let item of comboService.tiposColaborador" [value]="item.id">
+              {{item.descricao}}
+            </option>
+          </select>
+          <app-form-field-error [form-control]="modelForm.get('tipoColaborador').get('id')">
+          </app-form-field-error>
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" name="cpf"
+            formControlName="cpf" auto-contraste altera-fonte mask="000.000.000-00" [attr.disabled]="buscouColaborador ? true : null"  placeholder="CPF">
+          <app-form-field-error [form-control]="modelForm.get('cpf')">
+          </app-form-field-error>
+        </div>
+        <div class="form-group col-md-6">
+          <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+            [attr.disabled]="buscouColaborador ? true : null" (click)="getColaborador()">
+            <fa-icon class="imgBtn" icon="address-book"></fa-icon>&nbsp;Verificar
+          </button>
+
+          <button *ngIf="buscouColaborador" auto-contraste-destaque altera-fonte type="button"
+            class="btn btn-primary  ml-3" (click)="clear()">
+            <fa-icon class="imgBtn" icon="eraser"></fa-icon>&nbsp;Limpar
+          </button>
+
+          <button *ngIf="buscouColaborador" auto-contraste-destaque altera-fonte type="button"
+            [disabled]="submittingForm" class="btn btn-primary  ml-3" (click)="submitForm()">
+            <fa-icon class="imgBtn" icon="save"></fa-icon>&nbsp;Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="accordion" *ngIf="buscouColaborador">
+    <div class="card">
+      <div class="card-header" id="headingOne" auto-contraste>
+        <h5 class="mb-0  ">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" auto-contraste-destaque altera-fonte>
+            Dados do colaborador <span auto-contraste-red-destaque *ngIf="abasInvalidas['1']" >[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" auto-contraste>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-10">
+              <div class="form-row ">
+                <div class="form-group col-md-10 ">
+                  <label for="nome" auto-contraste altera-fonte class="form-control-plaintext">Nome Completo</label>
+                  <input class="form-control" id="nome" type="text" formControlName="nome" auto-contraste />
+                  <app-form-field-error [form-control]="modelForm.get('nome')" error-group="1">
+                  </app-form-field-error>
+                </div>
+                <div class="form-group col-md-2 d-flex align-content-center flex-wrap mt-3">
+                  <div class="form-check form-check-inline ml-3">
+                    <label class="switch mt-2">
+                      <input class="form-check-input ml-2" type="checkbox" id="ativo" formControlName="ativo">
+                      <span class="slider round" auto-contraste></span>
+                    </label>
+                    <span class="ml-3">Ativo</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="nascimento" auto-contraste altera-fonte class="form-control-plaintext">Data de
+                    Nascimento</label>
+                  <input class="form-control" id="nascimento" formControlName="nascimento" type="text" auto-contraste
+                    mask="d0/M0/0000" [dropSpecialCharacters]="false" />
+                  <app-form-field-error [form-control]="modelForm.get('nascimento')" error-group="1">
+                  </app-form-field-error>
+                </div>
+                <div class="form-group col-md-4" formGroupName="paisNascimento">
+                  <label for="paisNascimento" auto-contraste altera-fonte class="form-control-plaintext">País de
+                    Nascimento</label>
+                  <select class="form-control" auto-contraste altera-fonte formControlName="id" id="paisNascimento" (change)="changePaisNascimento($event)">
+                    <option *ngFor="let item of comboService.paisesNascimento" [value]="item.id">
+                      {{item.descricao}}
+                    </option>
+                  </select>
+                  <app-form-field-error [form-control]="modelForm.get('paisNascimento').get('id')" error-group="1">
+                  </app-form-field-error>
+                </div>
+                <div class="form-group col-md-4" formGroupName="paisNacionalidade">
+                  <label for="paisNacionalidade" auto-contraste altera-fonte class="form-control-plaintext">País de
+                    Nacionalidade</label>
+                  <select class="form-control" auto-contraste altera-fonte formControlName="id" id="paisNacionalidade">
+                    <option *ngFor="let item of comboService.paisesNacionalidade" [value]="item.id">
+                      {{item.descricao}}
+                    </option>
+                  </select>
+                  <app-form-field-error [form-control]="modelForm.get('paisNacionalidade').get('id')" error-group="1">
+                  </app-form-field-error>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2" >
+              <div class="row d-flex justify-content-center">
+                <div *ngIf="imgFile" class="border border-dark " style="width: 120px; max-width: 120px; min-height: 160px; height: 160px;">
+                  <img [src]="imgFile" style="width: 100%; height: 100%" />
+                </div>
+                <div *ngIf="!imgFile" class="border border-dark " style="width: 120px; max-width: 120px; min-height: 160px; height: 160px;">
+                  <img src="./assets/images/sem-foto.png" style="width: 100%; height: 100%" />
+                </div>
+              </div>
+              <div class="row d-flex justify-content-around pl-3 pr-3">
+                <label for="file">
+                  <img src="./assets/images/camera.png" />
+                </label>
+                <input #photoFile type="file" class="form-control " id="file" accept=".png,.jpg,.jpeg"
+                  (change)="onImageChange($event)" />
+                <div
+                  (click)="openConfirmDialog(null, clearPhoto.bind(this),'Deseja remover a foto?')" *ngIf="imgFile">
+                  <img src="./assets/images/camera_erase.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="RG" auto-contraste altera-fonte class="form-control-plaintext">RG</label>
+              <input type="text" class="form-control" id="rg" formControlName="rg" auto-contraste altera-fonte>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="sexo" auto-contraste altera-fonte class="form-control-plaintext">Sexo</label>
+              <select class="form-control" id="sexo" formControlName="sexo" auto-contraste altera-fonte>
+                <option *ngFor="let item of sexo;" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('sexo')" error-group="1">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-4" formGroupName="raca">
+              <label for="raca" auto-contraste altera-fonte class="form-control-plaintext">Raça/Cor</label>
+              <select class="form-control" id="raca" formControlName="id" auto-contraste altera-fonte>
+                <option *ngFor="let item of comboService.racas;" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('raca').get('id')" error-group="1">
+              </app-form-field-error>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2" formGroupName="estadoCivil">
+              <label for="estadoCivil" auto-contraste altera-fonte class="form-control-plaintext">Estado Civil</label>
+              <select class="form-control" id="estadoCivil" formControlName="id" auto-contraste altera-fonte>
+                <option *ngFor="let item of comboService.estadoCivil;" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('estadoCivil').get('id')" error-group="1">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="NomeSocial" auto-contraste altera-fonte class="form-control-plaintext">
+                Nome Social para Travesti ou Transexual</label>
+              <input class="form-control" id="nomeSocial" formControlName="nomeSocial" type="text" auto-contraste />
+            </div>
+            <div class="form-group col-md-2">
+              <label for="cpf" auto-contraste altera-fonte class="form-control-plaintext">
+                CPF Novo</label>
+              <input class="form-control" id="cpfNovo" formControlName="cpfNovo" type="text" mask="000.000.000-00"
+                auto-contraste />
+            </div>
+            <div class="form-group col-md-2">
+              <label for="cpfAntigo" auto-contraste altera-fonte class="form-control-plaintext">
+                CPF Antigo</label>
+              <input class="form-control" id="cpfAntigo" formControlName="cpfAntigo" type="text" mask="000.000.000-00"
+                auto-contraste />
+            </div>
+            <div class="form-group col-md-2">
+              <label for="dataAlteracaoCPF" auto-contraste altera-fonte class="form-control-plaintext">
+                Data de Alteração</label>
+              <input class="form-control" id="dataAlteracaoCPF" formControlName="dataAlteracaoCPF" type="text"
+                auto-contraste />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="observacaoAlteracaoCPF" auto-contraste altera-fonte class="form-control-plaintext">Observação
+                da Alteração do CPF</label>
+              <textarea class="form-control" formControlName="observacaoAlteracaoCPF" id="observacaoAlteracaoCPF"
+                rows="2" auto-contraste altera-fonte></textarea>
+            </div>
+          </div>
+          <div class="form-row" *ngIf="modelForm.get('tipoColaborador').value.id != 1">
+            <div class="form-group col-md-2">
+              <label for="horarioInicioTrabalho" auto-contraste altera-fonte class="form-control-plaintext">Horário de Trabalho</label>
+              <input class="form-control" id="horarioInicioTrabalho" type="time" formControlName="horarioInicioTrabalho"
+              [readonly]="modelForm.get('horarioInicioTrabalho').value || this.desabilitaCampos" />
+              <app-form-field-error [form-control]="modelForm.get('horarioInicioTrabalho')" error-group="1">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-1 text-center">
+              <label auto-contraste altera-fonte class="form-control-plaintext">&nbsp;
+              </label>
+              <span>até</span>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="horarioTerminoTrabalho" auto-contraste altera-fonte class="form-control-plaintext">&nbsp;
+              </label>
+              <input class="form-control" id="horarioTerminoTrabalho" type="time" formControlName="horarioTerminoTrabalho"
+                auto-contraste [readonly]="modelForm.get('horarioTerminoTrabalho').value || this.desabilitaCampos" />
+              <app-form-field-error [form-control]="modelForm.get('horarioTerminoTrabalho')" error-group="1">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-2 d-flex align-content-center flex-wrap mt-3">
+              <div class="form-check form-check-inline ml-3">
+                <label class="switch mt-2">
+                  <input class="form-check-input ml-2" type="checkbox" id="eHorarioDinamicoTrabalho" formControlName="eHorarioDinamicoTrabalho" (change)="changeHorarioDinamicoTrabalho($event)">
+                  <span class="slider round" auto-contraste></span>
+                </label>
+                <span class="ml-3">Horário variável</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- INICIO CARD Remuneração -->
+      <div class="card" *ngIf="modelForm.get('tipoColaborador').value.id == 2 || modelForm.get('tipoColaborador').value.id == 3">
+        <div class="card-header" id="hRemuneracao" auto-contraste >
+          <h5 class="mb-0">
+            <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseRemuneracao" aria-expanded="false" aria-controls="collapseRemuneracao" auto-contraste-destaque altera-fonte>
+               Remuneração <span *ngIf="abasInvalidas['2']" auto-contraste-red-destaque>[*]</span>
+              <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+              <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+            </div>
+          </h5>
+        </div>
+        <div id="collapseRemuneracao" class="collapse" aria-labelledby="hRemuneracao" auto-contraste>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-sm-3" formGroupName="unidadePagamento">
+                <label class="col-form-label" auto-contraste altera-fonte>Unidade de Pagamento</label>
+                <select class="form-control" formControlName="id" (change)="setSalBase($event.target.value)"
+                  auto-contraste altera-fonte>
+                  <option *ngFor="let item of comboService.unidadePagamento" [value]="item.id">
+                    {{item.descricao}}
+                  </option>
+                </select>
+                <app-form-field-error [form-control]="modelForm.get('unidadePagamento').get('id')" error-group="2">
+                </app-form-field-error>
+              </div>
+              <div class="form-group col-sm-2">
+                <label class="col-form-label" auto-contraste altera-fonte>Salário Base</label>
+                <input type="text" class="form-control" name="salarioBase" formControlName="salarioBase"
+                  mask="separator.2" prefix="R$ " thousandSeparator="." title="Salário Base" auto-contraste maxlength="10"
+                  altera-fonte>
+              <app-form-field-error [form-control]="modelForm.get('salarioBase')">
+              </app-form-field-error>
+            </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12">
+                <label class="col-form-label" auto-contraste altera-fonte>Observação</label>
+                <textarea class="form-control" formControlName="observacaoRemuneracao" id="observacaoRemuneracao"
+                  name="observacaoRemuneracao" rows="2" auto-contraste altera-fonte></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- FIM CARD Remuneração -->
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseEndereco" aria-expanded="false" aria-controls="collapseEndereco" auto-contraste-destaque altera-fonte>
+             Endereço <span *ngIf="abasInvalidas['3']" auto-contraste-red-destaque>[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseEndereco" class="collapse" aria-labelledby="headingThree" auto-contraste>
+        <div class="card-body">
+          <div>
+            <div [formGroup]="modelForm">
+              <div formArrayName="enderecos"
+                *ngFor="let endereco of modelForm.get('enderecos')['controls']; let i = index">
+                <div [formGroupName]="i">
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="cep" class="form-control-plaintext" auto-contraste altera-fonte>CEP</label>
+                      <div class="input-group mb-2">
+                        <input class="form-control" id="cep" type="text" placeholder="Informe o CEP"
+                          formControlName="cep" auto-contraste altera-fonte mask="99999-999"
+                          (change)="clearEndereco($event)" />
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" id="consultar" (click)="buscarCEP()" title="Pesquisar CEP">
+                            <fa-icon class="imgBtn" icon="globe"></fa-icon>&nbsp;
+                          </button>
+                        </div>
+
+
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 text-center">
+                      <app-form-field-error [form-control]="endereco.get('cep')" error-group="3"></app-form-field-error>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-3" formGroupName="tipoLogradouro">
+                      <label for="tipoLogradouro" auto-contraste altera-fonte class="form-control-plaintext">Tipo
+                        Logradouro</label>
+                      <select class="form-control" auto-contraste altera-fonte id="tipoLogradouro" formControlName="id"
+                        [attr.disabled]="true" auto-contraste altera-fonte>
+                        <option *ngFor="let item of comboService.tiposLogradouro" [value]="item.id">
+                          {{item.descricao}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="nomeLogradouro" class="form-control-plaintext" auto-contraste
+                        altera-fonte>Logradouro</label>
+                      <input class="form-control" id="nomeLogradouro" type="text" formControlName="nomeLogradouro"
+                        auto-contraste altera-fonte [attr.disabled]="true" />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="numeroLogradouro" class="form-control-plaintext" auto-contraste
+                        altera-fonte>Número</label>
+                      <input class="form-control" id="numeroLogradouro" type="text" formControlName="numeroLogradouro"
+                        auto-contraste altera-fonte />
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-8">
+                      <label for="Complemento" class="form-control-plaintext" auto-contraste
+                        altera-fonte>Complemento</label>
+                      <input class="form-control" id="Complemento" type="text" formControlName="complemento"
+                        auto-contraste altera-fonte />
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="Bairro" class="form-control-plaintext" auto-contraste altera-fonte>Bairro</label>
+                      <input class="form-control" id="Bairro" type="text" formControlName="bairro"
+                        [attr.disabled]="true" auto-contraste altera-fonte />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-8">
+                      <label for="Cidade" class="form-control-plaintext" auto-contraste altera-fonte>Cidade</label>
+                      <input class="form-control" id="Cidade" type="text" formControlName="municipio"
+                        [attr.disabled]="true" auto-contraste altera-fonte />
+                    </div>
+
+                    <div class="form-group col-md-4" formGroupName="uf">
+                      <label class="col-form-label" auto-contraste altera-fonte class="form-control-plaintext"
+                        auto-contraste altera-fonte>UF</label>
+                      <select class="form-control" auto-contraste altera-fonte formControlName="id" auto-contraste
+                        altera-fonte [attr.disabled]="true">
+                        <option *ngFor="let item of comboService.ufs;" [value]="item.id">
+                          {{item.descricao}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseContato" aria-expanded="false" aria-controls="collapseContato" auto-contraste-destaque altera-fonte>
+            Contatos<span *ngIf="abasInvalidas['4']" auto-contraste-red-destaque>[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseContato" class="collapse" aria-labelledby="headingThree" auto-contraste>
+        <div class="card-body">
+          <div>
+            <div formArrayName="emails">
+              <div class="form-row">
+                <div class="form-group col-md-6" [formGroupName]="i"
+                  *ngFor="let email of modelForm.get('emails')['controls']; let i = index">
+                  <label for="email" auto-contraste altera-fonte class="form-control-plaintext">Email
+                    {{ email.value.tipoContato == 1 ? " Principal": " Secundário" }}</label>
+                  <input class="form-control" id="email{{i}}" type="text" auto-contraste formControlName="email" />
+                  <app-form-field-error [form-control]="email.get('email')" error-group="4"></app-form-field-error>
+                </div>
+              </div>
+            </div>
+            <div formArrayName="telefones">
+              <div class="form-row">
+                <div class="col-md-2" [formGroupName]="0">
+                  <label for="ddd_0" auto-contraste altera-fonte>DDD</label>
+                  <input class="form-control" id="ddd_0" type="text" auto-contraste formControlName="ddd" mask="00" />
+                  <app-form-field-error
+                    [form-control]="this.modelForm.get('telefones')['controls'][0]['controls']['ddd']" error-group="4">
+                  </app-form-field-error>
+                </div>
+                <div class="col-md-4" [formGroupName]="0">
+                  <label for="numero_0" auto-contraste altera-fonte>Telefone Principal</label>
+                  <input class="form-control" id="numero_0" type="text" auto-contraste formControlName="numero"
+                    mask="00000-0000||0000-0000" />
+                  <app-form-field-error
+                    [form-control]="this.modelForm.get('telefones')['controls'][0]['controls']['numero']" error-group="4">
+                  </app-form-field-error>
+                </div>
+
+                <div class="col-md-2" [formGroupName]="1">
+                  <label for="ddd_1" auto-contraste altera-fonte>DDD</label>
+                  <input class="form-control" id="ddd_1" type="text" auto-contraste formControlName="ddd" mask="00" />
+                  <app-form-field-error
+                    [form-control]="this.modelForm.get('telefones')['controls'][1]['controls']['ddd']" error-group="4">
+                  </app-form-field-error>
+                </div>
+                <div class="col-md-4" [formGroupName]="1">
+                  <label for="numero_1" auto-contraste altera-fonte>Telefone Secundário
+                    Principal</label>
+                  <input class="form-control" id="numero_1" type="text" auto-contraste formControlName="numero"
+                    mask="00000-0000||0000-0000" />
+                  <app-form-field-error
+                    [form-control]="this.modelForm.get('telefones')['controls'][1]['controls']['numero']" error-group="4">
+                  </app-form-field-error>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- INICIO CARD Trabalhador Estrangeiro -->
+    <div class="card">
+      <div class="card-header" id="hTrabEstrangeiro" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseTrabEstrangeiro" aria-expanded="false" aria-controls="collapseTrabEstrangeiro" auto-contraste-destaque altera-fonte>
+            Trabalhador Estrangeiro <span *ngIf="abasInvalidas['5']" class="text-danger mr-2">[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseTrabEstrangeiro" class="collapse" aria-labelledby="hTrabEstrangeiro" auto-contraste>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-sm-2" formGroupName="tempoResidenciaEstrangeiro">
+              <label class="col-form-label" auto-contraste altera-fonte>Tempo de Residência</label>
+              <select class="form-control" formControlName="id" auto-contraste altera-fonte>
+                <option value="0">Selecione</option>
+                <option *ngFor="let item of comboService.tempoResidencia" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('tempoResidenciaEstrangeiro').get('id')" error-group="5">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-sm-10" formGroupName="classificacaoTrabEstrangeiro">
+              <label class="col-form-label" auto-contraste altera-fonte>Classificação do Trabalho Estrangeiro</label>
+              <select class="form-control" formControlName="id" auto-contraste altera-fonte>
+                <option value="0">Selecione</option>
+                <option *ngFor="let item of comboService.classTrabalhoEstrangeiro" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('classificacaoTrabEstrangeiro').get('id')" error-group="5">
+              </app-form-field-error>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD Trabalhador Estrangeiro -->
+    <div class="card">
+      <div class="card-header" id="headingThree" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapsePDA" aria-expanded="false" aria-controls="collapsePDA" auto-contraste-destaque altera-fonte>
+            Portador de Deficiência <span *ngIf="abasInvalidas['6']" auto-contraste-red-destaque>[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapsePDA" class="collapse" aria-labelledby="headingThree" auto-contraste>
+        <div class="card-body">
+          <div [formGroup]="modelForm">
+            <div class="row" formGroupName="deficiencia">
+              <div class="col-md-6">
+                <div class="form-check form-check-inline">
+                  <label class="switch mt-2">
+                    <input class="form-check-input ml-2" type="checkbox" id="ehPortadorDeNecessidadeEspecial"
+                      formControlName="ehPortadorDeNecessidadeEspecial">
+                    <span class="slider round" auto-contraste></span>
+                  </label>
+                  &nbsp;&nbsp;Portador de Necessidade Especial
+                </div>
+                <app-form-field-error
+                  [form-control]="modelForm.get('deficiencia').get('ehPortadorDeNecessidadeEspecial')" error-group="6">
+                </app-form-field-error>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check form-check-inline">
+                  <label class="switch mt-2">
+                    <input class="form-check-input ml-2" type="checkbox" id="ehReabilitadoReadaptado"
+                      formControlName="ehReabilitadoReadaptado">
+                    <span class="slider round" auto-contraste></span>
+                  </label>
+                  &nbsp;&nbsp;Reabilitado/Readaptado
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3" *ngIf="modelForm.get('deficiencia').value.ehPortadorDeNecessidadeEspecial">
+              <div class="col-md-2" *ngFor="let item of comboService.classificacaoDeficiencias">
+                <div class="form-check form-check-inline">
+                  <label class="switch mt-2">
+                    <input class="form-check-input ml-2" type="checkbox" id="classDef_{{item.id}}" [value]="item.id"
+                      (change)="change($event)" [attr.checked]="deficienciasMarcadas[item.id]">
+                    <span class="slider round" auto-contraste></span>
+                  </label>
+                  <span class="ml-2">{{item.descricao}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3" formGroupName="deficiencia">
+              <div class="col-md">
+                <label for="observacaoDeficiencia" class="form-control-plaintext" auto-contraste
+                  altera-fonte>Observação:</label>
+                <textarea class="form-control" formControlName="observacaoDeficiencia" id="observacaoDeficiencia"
+                  rows="2" auto-contraste altera-fonte></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- INICIO CARD Residente no Exterior -->
+    <div class="card">
+      <div class="card-header" id="hcollapseResidenteExterior" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseResidenteExterior" aria-expanded="false" aria-controls="collapseResidenteExterior" auto-contraste-destaque altera-fonte>
+            Residente no Exterior <span *ngIf="abasInvalidas['7']" class="text-danger mr-2">[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseResidenteExterior" class="collapse" aria-labelledby="hcollapseResidenteExterior" auto-contraste>
+        <div class="card-body">
+          <div formGroupName="residenciaExterior">
+            <div class="form-row">
+              <div class="form-group col-md-6" formGroupName="paisResidencia">
+                <label class="col-form-label" auto-contraste altera-fonte>País Residência</label>
+                <select class="form-control" formControlName="id" auto-contraste altera-fonte>
+                  <option *ngFor="let item of comboService.paisesExterior" [value]="item.id">
+                    {{item.descricao}}
+                  </option>
+                </select>
+                <app-form-field-error
+                  [form-control]="modelForm.get('residenciaExterior').get('paisResidencia').get('id')" error-group="7">
+                </app-form-field-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="codigoPostal" auto-contraste altera-fonte class="form-control-plaintext">Código
+                  Postal</label>
+                <input class="form-control" id="codigoPostal" type="text" formControlName="codigoPostal"
+                  auto-contraste />
+                <app-form-field-error [form-control]="modelForm.get('residenciaExterior').get('codigoPostal')" error-group="7">
+                </app-form-field-error>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="descricao" auto-contraste altera-fonte class="form-control-plaintext">Descrição</label>
+                <input class="form-control" id="descricao" type="text" formControlName="descricao" auto-contraste />
+                <app-form-field-error [form-control]="modelForm.get('residenciaExterior').get('descricao')" error-group="7">
+                </app-form-field-error>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="numero" auto-contraste altera-fonte class="form-control-plaintext">Número</label>
+                <input class="form-control" id="numero" type="text" formControlName="numero" auto-contraste />
+              </div>
+              <div class="form-group col-md-9">
+                <label for="complemento" auto-contraste altera-fonte class="form-control-plaintext">Complemento</label>
+                <input class="form-control" id="complemento" type="text" formControlName="complemento" auto-contraste />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="bairro" auto-contraste altera-fonte class="form-control-plaintext">Bairro</label>
+                <input class="form-control" id="bairro" type="text" formControlName="bairro" auto-contraste />
+                <app-form-field-error [form-control]="modelForm.get('residenciaExterior').get('bairro')" error-group="7">
+                </app-form-field-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="cidade" auto-contraste altera-fonte class="form-control-plaintext">Cidade</label>
+                <input class="form-control" id="cidade" type="text" formControlName="cidade" auto-contraste />
+                <app-form-field-error [form-control]="modelForm.get('residenciaExterior').get('cidade')" error-group="7">
+                </app-form-field-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD Residente no Exterior -->
+    <!-- INICIO CARD dependentes -->
+    <div class="card" [formGroup]="modelFormDependente">
+      <div class="card-header" id="hcollapseDependentes" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseDependentes" aria-expanded="false" aria-controls="collapseDependentes" auto-contraste-destaque altera-fonte>
+            Dependentes
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseDependentes" class="collapse" aria-labelledby="hcollapseDependentes" auto-contraste>
+        <div class="card-body">
+          <div class="mb-4">
+            <div class="form-row">
+              <div class="form-group col-md-4" formGroupName="tipoDependente">
+                <label for="tiposDependentes" auto-contraste altera-fonte class="form-control-plaintext">Tipo</label>
+                <select class="form-control" auto-contraste altera-fonte formControlName="id" id="tiposDependentes">
+                  <option *ngFor="let item of comboService.tiposDependentes" [value]="item.id">
+                    {{item.descricao}}
+                  </option>
+                </select>
+                <app-form-field-error [form-control]="modelFormDependente.get('tipoDependente').get('id')" >
+                </app-form-field-error>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="nascimentoDependente" auto-contraste altera-fonte class="form-control-plaintext">Data de
+                  Nascimento</label>
+                <input class="form-control" id="nascimentoDependente" type="text" formControlName="nascimento"
+                  auto-contraste mask="00/00/0000" [dropSpecialCharacters]="false" />
+                <app-form-field-error [form-control]="modelFormDependente.get('nascimento')"></app-form-field-error>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="cpfDependente" auto-contraste altera-fonte class="form-control-plaintext">CPF</label>
+                <input class="form-control" id="cpfDependente" type="text" formControlName="cpf" auto-contraste
+                  mask="000.000.000-00" />
+                <app-form-field-error [form-control]="modelFormDependente.get('cpf')" ></app-form-field-error>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="nomeDependente" auto-contraste altera-fonte class="form-control-plaintext">Nome</label>
+                <input class="form-control" id="nomeDependente" type="text" formControlName="nome" auto-contraste />
+              </div>
+              <app-form-field-error [form-control]="modelFormDependente.get('nome')" ></app-form-field-error>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <label class="switch mt-2">
+                    <input class="form-check-input ml-2" type="checkbox" id="temIRRF" formControlName="temIRRF">
+                    <span class="slider round" auto-contraste></span>
+                  </label>
+                  <span class="ml-2">Dependente do IRRF</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <label class="switch mt-2">
+                    <input class="form-check-input ml-2" type="checkbox" id="temSalarioFamilia"
+                      formControlName="temSalarioFamilia">
+                    <span class="slider round" auto-contraste></span>
+                  </label>
+                  <span class="ml-2">Dependente Salário Família</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <label class="switch mt-2">
+                    <input class="form-check-input ml-2" type="checkbox" id="temIncapacidadeFisicaMental"
+                      formControlName="temIncapacidadeFisicaMental">
+                    <span class="slider round" auto-contraste></span>
+                  </label>
+                  <span class="ml-2">Incapacidade Física e Mental</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-row d-flex flex-row-reverse mt-3">
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3" (click)="limparDependente()">
+                  <fa-icon class="imgBtn" icon="eraser"></fa-icon> <span class="ml-2">Limpar</span>
+                </button>
+              </div>
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+                  (click)="gravarEditarDependentes()">
+                  <fa-icon class="imgBtn" icon="plus"></fa-icon> <span class="ml-2">Registrar</span>
+                </button>
+              </div>             </div>
+          </div>
+          <div class="table-responsive-md" *ngIf="dependentes">
+            <table class="table table-striped">
+              <thead class="thead-light">
+                <tr>
+                  <th auto-contraste-destaque altera-fonte class="w-20" scope="col-2">
+                    Nome
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-40" scope="col-4">
+                    Dt. Nascimento
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10 text-center" scope="col-1">Tipo
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10 text-center" scope="col-1">Dep. IRRF
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10 text-center" scope="col-1">Dep. Sal. Fam
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10 text-center" scope="col-1">Inc. Fis. Men.
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-20 text-center" scope="col-2">Ação</th>
+                </tr>
+              </thead>
+              <tbody auto-contraste altera-fonte>
+                <tr *ngIf="dependentes.length == 0">
+                  <td colspan="7" class="bg-secondary text-center text-white font-weight-bold">
+                    <span>Não existe dependentes cadastrados</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of dependentes">
+                  <td>{{item.nome }}</td>
+                  <td>{{item.nascimento }}</td>
+                  <td>{{item.tipoDependente.descricao}}</td>
+                  <td class="text-center">
+                    <fa-icon [icon]="item.temIRRF ? 'toggle-on' : 'toggle-off'" size="lg"
+                      [ngClass]="item.temIRRF ? 'text-primary' : 'text-secondary'" auto-contraste>
+                    </fa-icon>
+                  </td>
+                  <td class="text-center">
+                    <fa-icon [icon]="item.temSalarioFamilia ? 'toggle-on' : 'toggle-off'" size="lg"
+                      [ngClass]="item.temSalarioFamilia ? 'text-primary' : 'text-secondary'" auto-contraste>
+                    </fa-icon>
+                  </td>
+                  <td class="text-center">
+                    <fa-icon [icon]="item.temIncapacidadeFisicaMental ? 'toggle-on' : 'toggle-off'" size="lg"
+                      [ngClass]="item.temIncapacidadeFisicaMental ? 'text-primary' : 'text-secondary'" auto-contraste>
+                    </fa-icon>
+                  </td>
+                  <td class="text-center">
+                    <a auto-contraste-destaque class="btn btn-info text-white mr-2" (click)="editDependente(item.id)">
+                      <fa-icon class="imgBtn" icon="edit"></fa-icon><span class="ml-2">Editar</span>
+                    </a>
+                    <a auto-contraste-destaque class="btn btn-info text-white"
+                      (click)="openConfirmDialog(item.id, removeDependente.bind(this))">
+                      <fa-icon class="imgBtn" icon="trash"></fa-icon><span class="ml-2">Remover</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD dependentes -->
+
+    <!-- INICIO CARD Informações TSVE -->
+    <div class="card" formGroupName="dadoTSVE">
+      <div class="card-header" id="hcollapsedadoTSVE" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapsedadoTSVE" aria-expanded="false" aria-controls="collapsedadoTSVE" auto-contraste-destaque altera-fonte>
+            Informações do Trabalhador sem Vínculo <span *ngIf="abasInvalidas['9']" class="text-danger mr-2">[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapsedadoTSVE" class="collapse" aria-labelledby="hcollapsedadoTSVE" auto-contraste>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-4" formGroupName="cadastramentoInicial">
+              <label for="cadastramentoInicial" auto-contraste altera-fonte class="form-control-plaintext">Cadastramento
+                Inicial</label>
+              <select class="form-control" auto-contraste altera-fonte formControlName="id" id="cadastramentoInicial">
+                <option *ngFor="let item of comboService.cadastramentoInicial" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('dadoTSVE').get('cadastramentoInicial').get('id')" error-group="9">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="tsve_dataInicio" auto-contraste altera-fonte class="form-control-plaintext">Data de
+                Início</label>
+              <input class="form-control" id="tsve_dataInicio" type="text" formControlName="dataInicio"
+                mask="00/00/0000" [dropSpecialCharacters]="false" auto-contraste [readonly]="verificaTipoColaborador()"/>
+                <app-form-field-error [form-control]="modelForm.get('dadoTSVE').get('dataInicio')" error-group="9">
+                </app-form-field-error>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="tsve_numeroProcesso" auto-contraste altera-fonte class="form-control-plaintext">Número de
+                Processo de Trabalho</label>
+              <input class="form-control" id="tsve_numeroProcesso" type="text" formControlName="numeroProcesso"
+                mask="9{20}" auto-contraste />
+                <app-form-field-error [form-control]="modelForm.get('dadoTSVE').get('numeroProcesso')" error-group="9">
+                </app-form-field-error>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="tsve_matricula" auto-contraste altera-fonte class="form-control-plaintext">Matrícula</label>
+              <input class="form-control" id="tsve_matricula" type="text" formControlName="matricula" mask="A{30}"
+                auto-contraste />
+                <app-form-field-error [form-control]="modelForm.get('dadoTSVE').get('matricula')" error-group="9">
+                </app-form-field-error>
+            </div>
+
+            <div class="form-group col-md-4" *ngIf="modelForm.get('tipoColaborador').value.id != 1">
+              <label for="tsve_cargo" auto-contraste altera-fonte class="form-control-plaintext">Cargo</label>
+              <input class="form-control" id="tsve_cargo" type="text" formControlName="cargo"
+                auto-contraste />
+                <app-form-field-error [form-control]="modelForm.get('dadoTSVE').get('cargo')" error-group="9">
+                </app-form-field-error>
+            </div>
+
+            <div class="form-group col-md-4" formGroupName="cboCargo" *ngIf="modelForm.get('tipoColaborador').value.id != 1">
+              <label for="cboCargo" auto-contraste altera-fonte class="form-control-plaintext">CBO Cargo</label>
+              <select class="form-control" auto-contraste altera-fonte formControlName="id" id="cboCargo">
+                <option *ngFor="let item of comboService.cboCargo" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('dadoTSVE').get('cboCargo').get('id')" error-group="9">
+              </app-form-field-error>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD Informações TSVE -->
+
+    <!-- INICIO CARD Informações do estagio -->
+    <div class="card" formGroupName="dadoEstagio" *ngIf="modelForm.get('tipoColaborador').value.id == 1">
+      <div class="card-header" id="hcollapseInfEstagio" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseInfEstagio" aria-expanded="false" aria-controls="collapseInfEstagio" auto-contraste-destaque altera-fonte>
+            Informações do Estágio <span *ngIf="abasInvalidas['10']" class="text-danger mr-2">[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseInfEstagio" class="collapse" aria-labelledby="hcollapseInfEstagio" auto-contraste>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-4" formGroupName="naturezaEstagio">
+              <label for="naturezaEstagio" auto-contraste altera-fonte class="form-control-plaintext">Natureza
+                Estágio</label>
+              <select class="form-control" auto-contraste altera-fonte formControlName="id" id="naturezaEstagio">
+                <option *ngFor="let item of comboService.naturezaEstagio" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('naturezaEstagio').get('id')" error-group="10">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-4" formGroupName="nivelEstagio">
+              <label for="nivelEstagio" auto-contraste altera-fonte class="form-control-plaintext">Nível Estágio</label>
+              <select class="form-control" auto-contraste altera-fonte formControlName="id" id="nivelEstagio">
+                <option *ngFor="let item of comboService.nivelEstagio" [value]="item.id">
+                  {{item.descricao}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('nivelEstagio').get('id')" error-group="10">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="apoliceSeguro" auto-contraste altera-fonte class="form-control-plaintext">Apólice
+                Seguro</label>
+              <input class="form-control" id="apoliceSeguro" type="text" formControlName="apoliceSeguro"
+                auto-contraste />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6" formGroupName="setorEstagio">
+              <label for="setorEstagio" auto-contraste altera-fonte class="form-control-plaintext">Setor</label>
+              <select class="form-control" auto-contraste altera-fonte formControlName="id" id="setorEstagio">
+                <option *ngFor="let item of comboService.setorEstagio" [value]="item.id">
+                  {{item.siglaDescricaoText}}
+                </option>
+              </select>
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('setorEstagio').get('id')" error-group="10">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="areaAtuacao" auto-contraste altera-fonte class="form-control-plaintext">Área de atuação
+              </label>
+              <input class="form-control" id="areaAtuacao" type="text" formControlName="areaAtuacao" auto-contraste />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('areaAtuacao')" error-group="10">
+              </app-form-field-error>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="dataInicio" auto-contraste altera-fonte class="form-control-plaintext">Data de Início
+              </label>
+              <input class="form-control" id="dataInicio" type="text" formControlName="dataInicio" auto-contraste
+                mask="00/00/0000" [dropSpecialCharacters]="false" (change)="incluirDataInicio()"/>
+                <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('dataInicio')" error-group="10">
+                </app-form-field-error>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="dataPrevistaTermino" auto-contraste altera-fonte class="form-control-plaintext">Data Prevista
+                Término
+              </label>
+              <input class="form-control" id="dataPrevistaTermino" type="text" formControlName="dataPrevistaTermino"
+                auto-contraste mask="00/00/0000" [dropSpecialCharacters]="false" />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('dataPrevistaTermino')" error-group="10">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="horarioInicio" auto-contraste altera-fonte class="form-control-plaintext">Horário do Estágio
+              </label>
+              <input class="form-control" id="horarioInicio" type="time" formControlName="horarioInicio"
+              [readonly]="modelForm.get('dadoEstagio').get('eHorarioDinamico').value"/>
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('horarioInicio')" error-group="10">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-1 text-center">
+              <label auto-contraste altera-fonte class="form-control-plaintext">&nbsp;
+              </label>
+              <span>até</span>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="horarioTermino" auto-contraste altera-fonte class="form-control-plaintext">&nbsp;
+              </label>
+              <input class="form-control" id="horarioTermino" type="time" formControlName="horarioTermino"
+                auto-contraste [readonly]="modelForm.get('dadoEstagio').get('eHorarioDinamico').value" />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('horarioTermino')" error-group="10">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-2 d-flex align-content-center flex-wrap mt-3">
+              <div class="form-check form-check-inline ml-3">
+                <label class="switch mt-2">
+                  <input class="form-check-input ml-2" type="checkbox" id="eHorarioDinamico" formControlName="eHorarioDinamico" (change)="changeHorarioDinamico($event)">
+                  <span class="slider round" auto-contraste></span>
+                </label>
+                <span class="ml-3">Horário variável</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="cpfSupervisor" auto-contraste altera-fonte class="form-control-plaintext">CPF Supervisor
+              </label>
+              <input class="form-control" id="cpfSupervisor" type="text" formControlName="cpfSupervisor" auto-contraste
+                mask="000.000.000-00" />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('cpfSupervisor')" error-group="10">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-9">
+              <label for="nomeSupervisor" auto-contraste altera-fonte class="form-control-plaintext">Nome Supervisor
+              </label>
+              <input class="form-control" id="nomeSupervisor" type="text" formControlName="nomeSupervisor"
+                auto-contraste />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('nomeSupervisor')" error-group="10">
+              </app-form-field-error>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD Informações do estagio -->
+    <!-- INICIO CARD Instituição de ensino -->
+    <div class="card" formGroupName="dadoEstagio" *ngIf="modelForm.get('tipoColaborador').value.id == 1">
+      <div class="card-header" id="hInstituicaoEnsino" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseInstituicaoEnsino" aria-expanded="false" aria-controls="collapseInstituicaoEnsino" auto-contraste-destaque altera-fonte>
+            Instituição de Ensino <span *ngIf="abasInvalidas['11']" auto-contraste-red-destaque>[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseInstituicaoEnsino" class="collapse" aria-labelledby="hInstituicaoEnsino" auto-contraste>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="cnpjInstEnsino" auto-contraste altera-fonte class="form-control-plaintext">CNPJ Instituição de
+                Ensino</label>
+              <input class="form-control" id="cnpjInstEnsino" type="text" formControlName="cnpjInstEnsino"
+                auto-contraste mask="00.000.000/0000-00" />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('cnpjInstEnsino')" error-group="11">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-9">
+              <label for="razaoSocialInstEnsino" auto-contraste altera-fonte class="form-control-plaintext">Razão Social
+                Instituição de Ensino
+              </label>
+              <input class="form-control" id="razaoSocialInstEnsino" type="text" formControlName="razaoSocialInstEnsino"
+                auto-contraste />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('razaoSocialInstEnsino')" error-group="11">
+              </app-form-field-error>
+            </div>
+          </div>
+          <div formGroupName="enderecoInstEnsino">
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="cep" class="form-control-plaintext" auto-contraste altera-fonte>CEP</label>
+                <div class="input-group mb-2">
+                  <input class="form-control" id="cep" type="text" placeholder="Informe o CEP" formControlName="cep"
+                    auto-contraste altera-fonte mask="00000-000" (change)="clearEnderecoInstituicao($event)" />
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" id="consultar" (click)="buscarCEPInstituicao()"
+                      title="Pesquisar CEP">
+                      <fa-icon class="imgBtn" icon="globe"></fa-icon>&nbsp;
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-9 d-flex align-items-end">
+                <app-form-field-error
+                  [form-control]="modelForm.get('dadoEstagio').get('enderecoInstEnsino').get('cep')" error-group="11">
+                </app-form-field-error>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3" formGroupName="tipoLogradouro">
+                <label for="tipoLogradouro" auto-contraste altera-fonte class="form-control-plaintext">Tipo
+                  Logradouro</label>
+                <select class="form-control" auto-contraste altera-fonte id="tipoLogradouro" formControlName="id"
+                  [attr.disabled]="true" auto-contraste altera-fonte>
+                  <option *ngFor="let item of comboService.tiposLogradouro" [value]="item.id">
+                    {{item.descricao}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="nomeLogradouro" class="form-control-plaintext" auto-contraste
+                  altera-fonte>Logradouro</label>
+                <input class="form-control" id="nomeLogradouro" type="text" formControlName="nomeLogradouro"
+                  auto-contraste altera-fonte [attr.disabled]="true" />
+                <app-form-field-error
+                  [form-control]="modelForm.get('dadoEstagio').get('enderecoInstEnsino').get('nomeLogradouro')" error-group="11">
+                </app-form-field-error>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="numeroLogradouro" class="form-control-plaintext" auto-contraste altera-fonte>Número</label>
+                <input class="form-control" id="numeroLogradouro" type="text" formControlName="numeroLogradouro"
+                  auto-contraste altera-fonte />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-8">
+                <label for="Complemento" class="form-control-plaintext" auto-contraste altera-fonte>Complemento</label>
+                <input class="form-control" id="Complemento" type="text" formControlName="complemento" auto-contraste
+                  altera-fonte />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="Bairro" class="form-control-plaintext" auto-contraste altera-fonte>Bairro</label>
+                <input class="form-control" id="Bairro" type="text" formControlName="bairro" [attr.disabled]="true"
+                  auto-contraste altera-fonte />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-8">
+                <label for="Cidade" class="form-control-plaintext" auto-contraste altera-fonte>Cidade</label>
+                <input class="form-control" id="Cidade" type="text" formControlName="municipio" [attr.disabled]="true"
+                  auto-contraste altera-fonte />
+              </div>
+              <div class="form-group col-md-4" formGroupName="uf">
+                <label class="col-form-label" auto-contraste altera-fonte class="form-control-plaintext" auto-contraste
+                  altera-fonte>UF</label>
+                <select class="form-control" auto-contraste altera-fonte formControlName="id" auto-contraste
+                  altera-fonte [attr.disabled]="true">
+                  <option *ngFor="let item of comboService.ufs;" [value]="item.id">
+                    {{item.descricao}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="cnpjAgenteInt" auto-contraste altera-fonte class="form-control-plaintext">CNPJ Agente
+                Integração</label>
+              <input class="form-control" id="cnpjAgenteInt" type="text" formControlName="cnpjAgenteInt" auto-contraste
+                mask="00.000.000/0000-00" />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('cnpjAgenteInt')" error-group="11">
+              </app-form-field-error>
+            </div>
+            <div class="form-group col-md-9">
+              <label for="razaoSocialAgenteInt" auto-contraste altera-fonte class="form-control-plaintext">Razão Social
+                Agente Integração
+              </label>
+              <input class="form-control" id="razaoSocialAgenteInt" type="text" formControlName="razaoSocialAgenteInt"
+                auto-contraste />
+              <app-form-field-error [form-control]="modelForm.get('dadoEstagio').get('razaoSocialAgenteInt')" error-group="11">
+              </app-form-field-error>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD Instituição de ensino -->
+    <!-- INICIO CARD Afastamento -->
+    <div class="card" [formGroup]="modelFormAfastamento">
+      <div class="card-header" id="hcollapseAfastamento" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseAfastamento" aria-expanded="false" aria-controls="collapseAfastamento" auto-contraste-destaque altera-fonte>
+            Afastamento
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseAfastamento" class="collapse" aria-labelledby="hcollapseAfastamento" auto-contraste>
+        <div class="card-body">
+          <div class="mb-4">
+            <div class="form-row">
+              <div class="form-group col-md-10" formGroupName="motivoAfastamento">
+                <label for="motivoAfastamento" auto-contraste altera-fonte class="form-control-plaintext">Motivo</label>
+                <select class="form-control" auto-contraste altera-fonte formControlName="id" id="motivoAfastamento">
+                  <option *ngFor="let item of comboService.motivoAfastamento" [value]="item.id">
+                    {{item.idDescricaoText}}
+                  </option>
+                </select>
+                <app-form-field-error [form-control]="modelFormAfastamento.get('motivoAfastamento').get('id')" >
+                </app-form-field-error>
+              </div>
+              <div class="form-group col-md-1">
+                <label for="dataInicioa" auto-contraste altera-fonte class="form-control-plaintext">Início</label>
+                <input class="form-control" id="dataInicioa" type="text" formControlName="dataInicio" auto-contraste
+                  mask="00/00/0000" [dropSpecialCharacters]="false" />
+                <app-form-field-error [form-control]="modelFormAfastamento.get('dataInicio')" ></app-form-field-error>
+              </div>
+              <div class="form-group col-md-1">
+                <label for="dataTerminoa" auto-contraste altera-fonte class="form-control-plaintext">Término</label>
+                <input class="form-control" id="dataTerminoa" type="text" formControlName="dataTermino" auto-contraste
+                  mask="00/00/0000" [dropSpecialCharacters]="false" />
+                <app-form-field-error [form-control]="modelFormAfastamento.get('dataTermino')" ></app-form-field-error>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="observacaoAfastamento" auto-contraste altera-fonte
+                  class="form-control-plaintext">Observação</label>
+                <textarea class="form-control" formControlName="observacaoAfastamento" id="observacaoAfastamento"
+                  rows="2" auto-contraste altera-fonte></textarea>
+              </div>
+            </div>
+            <div class="form-row d-flex flex-row-reverse mt-3">
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3" (click)="limparAfastamento()">
+                  <fa-icon class="imgBtn" icon="eraser"></fa-icon> <span class="ml-2">Limpar</span>
+                </button>
+              </div>
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+                  (click)="gravarEditarAfastamento()">
+                  <fa-icon class="imgBtn" icon="plus"></fa-icon> <span class="ml-2">Registrar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive-md" *ngIf="afastamentos">
+            <table class="table table-striped">
+              <thead class="thead-light">
+                <tr>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-2">
+                    Início
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-4">
+                    Término
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-1">Motivo do Afastamento
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-20 text-center" scope="col-2">Ação</th>
+                </tr>
+              </thead>
+              <tbody auto-contraste altera-fonte>
+                <tr *ngIf="afastamentos.length == 0">
+                  <td colspan="7" class="bg-secondary text-center text-white font-weight-bold">
+                    <span>Não existe afastamento cadastrado</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of afastamentos">
+                  <td>{{item.dataInicio }}</td>
+                  <td>{{item.dataTermino }}</td>
+                  <td>{{item.motivoAfastamento.idDescricaoText}}</td>
+                  <td class="text-center">
+                    <a auto-contraste-destaque class="btn btn-info text-white mr-2" (click)="editAfastamento(item.id)">
+                      <fa-icon class="imgBtn" icon="edit"></fa-icon><span class="ml-2">Editar</span>
+                    </a>
+                    <a auto-contraste-destaque class="btn btn-info text-white"
+                      (click)="openConfirmDialog(item.id, removeAfastamento.bind(this))">
+                      <fa-icon class="imgBtn" icon="trash"></fa-icon><span class="ml-2">Remover</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD Afastamento -->
+    <!-- INICIO CARD Experiencias Anteriores -->
+    <div class="card" [formGroup]="modelFormExperiencias">
+      <div class="card-header" id="hcollapseExperiencias" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseExperiencias" aria-expanded="false" aria-controls="collapseExperiencias" auto-contraste-destaque altera-fonte>
+            Experiências Profissionais
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseExperiencias" class="collapse" aria-labelledby="hcollapseExperiencias" auto-contraste>
+        <div class="card-body">
+          <div class="mb-4">
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="dataInicioPeriodo" auto-contraste altera-fonte class="form-control-plaintext">Período
+                </label>
+                <input class="form-control" id="dataInicioPeriodo" type="text" formControlName="dataInicioPeriodo" auto-contraste
+                  mask="00/0000" [dropSpecialCharacters]="false" required minlength="6"/>
+                  <app-form-field-error [form-control]="modelFormExperiencias.get('dataInicioPeriodo')"></app-form-field-error>
+              </div>
+              <div class="form-group col-md-1 text-center">
+                <label auto-contraste altera-fonte class="form-control-plaintext">&nbsp;
+                </label>
+                <span>até</span>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="dataFimPeriodo" auto-contraste altera-fonte class="form-control-plaintext">&nbsp;
+                </label>
+                <input class="form-control" id="dataFimPeriodo" type="text" formControlName="dataFimPeriodo"
+                  auto-contraste mask="00/0000" [dropSpecialCharacters]="false" required minlength="6"/>
+                <app-form-field-error [form-control]="modelFormExperiencias.get('dataFimPeriodo')"></app-form-field-error>
+              </div>
+              <div class="form-group col-md-2" style="display:none;">
+                <label for="ano" auto-contraste altera-fonte class="form-control-plaintext">Ano</label>
+                <input class="form-control" id="ano" type="text" formControlName="ano" auto-contraste mask="0000" />
+                <app-form-field-error [form-control]="modelFormExperiencias.get('ano')"></app-form-field-error>
+              </div>
+              <div class="form-group col-md-5">
+                <label for="empresa" auto-contraste altera-fonte class="form-control-plaintext">Empresa</label>
+                <input class="form-control" id="empresa" type="text" formControlName="empresa" auto-contraste />
+                <app-form-field-error [form-control]="modelFormExperiencias.get('empresa')"></app-form-field-error>
+              </div>
+              <div class="form-group col-md-5">
+                <label for="cargoOcupado" auto-contraste altera-fonte class="form-control-plaintext">Cargo</label>
+                <input class="form-control" id="cargoOcupado" type="text" formControlName="cargoOcupado"
+                  auto-contraste />
+                <app-form-field-error [form-control]="modelFormExperiencias.get('cargoOcupado')"></app-form-field-error>
+              </div>
+            </div>
+            <div class="form-row d-flex flex-row-reverse mt-3">
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3" (click)="limparExperiencia()">
+                  <fa-icon class="imgBtn" icon="eraser"></fa-icon> <span class="ml-2">Limpar</span>
+                </button>
+              </div>
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+                  (click)="gravarEditarExperiencias()">
+                  <fa-icon class="imgBtn" icon="plus"></fa-icon> <span class="ml-2">Registrar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive-md" *ngIf="afastamentos">
+            <table class="table table-striped">
+              <thead class="thead-light">
+                <tr>
+                  <!-- <th auto-contraste-destaque altera-fonte class="w-10" scope="col-2">
+                    Ano
+                  </th> -->
+                  <th auto-contraste-destaque altera-fonte class="w-6" scope="col-2">
+                    Data Início do Período
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-6" scope="col-2">
+                    Data Fim do Período
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-4">
+                    Empresa
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-1">
+                    Cargo Ocupado
+                  </th>
+                  <th auto-contraste-destaque altera-fonte class="w-20 text-center" scope="col-2">Ação</th>
+                </tr>
+              </thead>
+              <tbody auto-contraste altera-fonte>
+                <tr *ngIf="experiencias.length == 0">
+                  <td colspan="5" class="bg-secondary text-center text-white font-weight-bold">
+                    <span>Não existe experiencia cadastrada</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of experiencias">
+                  <td>{{ item.dataInicioPeriodo }}</td>
+                  <td>{{ item.dataFimPeriodo }}</td>
+                  <td>{{ item.empresa }}</td>
+                  <td>{{ item.cargoOcupado }}</td>
+                  <td class="text-center">
+                    <a auto-contraste-destaque class="btn btn-info text-white mr-2" (click)="editExperiencia(item.id)">
+                      <fa-icon class="imgBtn" icon="edit"></fa-icon><span class="ml-2">Editar</span>
+                    </a>
+                    <a auto-contraste-destaque class="btn btn-info text-white" (click)="removeExperiencia(item.id)">
+                      <fa-icon class="imgBtn" icon="trash"></fa-icon><span class="ml-2">Remover</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIM CARD Experiencias Anteriores -->
+    <!-- INICIO CARD Cursos Extra Curriculares -->
+    <div class="card" [formGroup]="modelFormCursoExtraCurriculares">
+        <div class="card-header" id="hcollapseCursoExtra" auto-contraste>
+          <h5 class="mb-0">
+            <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseCursoExtra" aria-expanded="false" aria-controls="collapseCursoExtra" auto-contraste-destaque altera-fonte>
+              Cursos Extracurriculares
+              <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+              <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+            </div>
+          </h5>
+        </div>
+        <div id="collapseCursoExtra" class="collapse" aria-labelledby="hcollapseCursoExtra" auto-contraste>
+          <div class="card-body">
+            <div class="mb-4">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="descricaoCurso" auto-contraste altera-fonte class="form-control-plaintext">Descrição</label>
+                  <input class="form-control" id="descricaoCurso" type="text" formControlName="descricao"
+                    auto-contraste />
+                  <app-form-field-error [form-control]="modelFormCursoExtraCurriculares.get('descricao')">
+                  </app-form-field-error>
+                </div>
+              </div>
+              <div class="form-row d-flex flex-row-reverse mt-3">
+                <div class="form-group col-md-2">
+                  <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+                    (click)="limparCursoExtraCurricular()">
+                    <fa-icon class="imgBtn" icon="eraser"></fa-icon> <span class="ml-2">Limpar</span>
+                  </button>
+                </div>
+                <div class="form-group col-md-2">
+                  <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+                    (click)="gravarEditarCursoExtraCurricular()">
+                    <fa-icon class="imgBtn" icon="plus"></fa-icon> <span class="ml-2">Registrar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive-md" *ngIf="cursosExtraCurriculares">
+              <table class="table table-striped">
+                <thead class="thead-light">
+                  <tr>
+                    <th auto-contraste-destaque altera-fonte class="w-75">Descrição
+                    </th>
+                    <th auto-contraste-destaque altera-fonte class="w-25 text-center">Ação</th>
+                  </tr>
+                </thead>
+                <tbody auto-contraste altera-fonte>
+                  <tr *ngIf="cursosExtraCurriculares.length == 0">
+                    <td colspan="7" class="bg-secondary text-center text-white font-weight-bold">
+                      <span>Não existe cursos cadastrado</span>
+                    </td>
+                  </tr>
+                  <tr *ngFor="let item of cursosExtraCurriculares">
+                    <td>{{item.descricao}}</td>
+                    <td class="text-center">
+                      <a auto-contraste-destaque class="btn btn-info text-white mr-2"
+                        (click)="editCursoExtraCurricular(item.id)">
+                        <fa-icon class="imgBtn" icon="edit"></fa-icon><span class="ml-2">Editar</span>
+                      </a>
+                      <a auto-contraste-destaque class="btn btn-info text-white"
+                        (click)="openConfirmDialog(item.id, removeCursoExtraCurricular.bind(this))">
+                        <fa-icon class="imgBtn" icon="trash"></fa-icon><span class="ml-2">Remover</span>
+                      </a>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- FIM CARD Cursos Extra Curriculares -->
+
+      <!-- INICIO CARD Informações Acadêmicas -->
+      <div class="card" [formGroup]="modelFormInformacoesAcademica">
+      <div class="card-header" id="hcollapseInformacoesAcademica" auto-contraste>
+        <h5 class="mb-0">
+          <div class="w-100 header_accordion " data-toggle="collapse" data-target="#collapseInformacoesAcademica" aria-expanded="false" aria-controls="collapseInformacoesAcademica" auto-contraste-destaque altera-fonte>
+            Informações Acadêmicas <span *ngIf="abasInvalidas['12']" auto-contraste-red-destaque>[*]</span>
+            <fa-icon icon="angle-double-right" class="text-collapsed float-right"></fa-icon>
+            <fa-icon icon="angle-double-down" class="text-expanded float-right"></fa-icon>
+          </div>
+        </h5>
+      </div>
+      <div id="collapseInformacoesAcademica" class="collapse" aria-labelledby="hcollapseInformacoesAcademica" auto-contraste>
+        <div class="card-body">
+          <div class="mb-4">
+            <div class="form-row" [formGroup]="modelForm">
+              <div class="form-group col-md-4" formGroupName="grauInstrucao">
+                <label for="grauInstrucao" auto-contraste altera-fonte class="form-control-plaintext">Grau de
+                  Instrução</label>
+                <select class="form-control" formControlName="id" auto-contraste altera-fonte (change)="ValidarCampoCurso($event)">
+                  <option *ngFor="let item of comboService.grauInstrucao;" [value]="item.id">
+                    {{item.descricao}}
+                  </option>
+                </select>
+                <app-form-field-error [form-control]="modelForm.get('grauInstrucao').get('id')" error-group="12">
+                </app-form-field-error>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="curso" auto-contraste altera-fonte class="form-control-plaintext">Curso</label>
+                <input class="form-control" id="curso" type="text" formControlName="curso" maxlength="100"
+                  auto-contraste />
+                <app-form-field-error [form-control]="modelFormInformacoesAcademica.get('curso')" error-group="12">
+                </app-form-field-error>
+              </div>
+              <div class="form-group col-md-4" formGroupName="situacao">
+                <label for="situacao" auto-contraste altera-fonte class="form-control-plaintext">Situação</label>
+                <select class="form-control" formControlName="id" auto-contraste altera-fonte>
+                  <option *ngFor="let item of comboService.situacao;" [value]="item.id">
+                    {{item.descricao}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="previsaoConclusao" auto-contraste altera-fonte class="form-control-plaintext">Previsão de Conclusão</label>
+                  <input class="form-control" id="previsaoConclusao" type="text" formControlName="previsaoConclusao"
+                  auto-contraste mask="00/0000" [dropSpecialCharacters]="false" required minlength="6"/>
+              </div>
+            </div>
+            <div class="form-row d-flex flex-row-reverse mt-2">
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+                  (click)="limparInformacoesAcademica()">
+                  <fa-icon class="imgBtn" icon="eraser"></fa-icon><span class="ml-2">Limpar</span>
+                </button>
+              </div>
+              <div class="form-group col-md-2">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3"
+                  (click)="gravarEditarInformacoesAcademica()">
+                  <fa-icon class="imgBtn" icon="plus"></fa-icon><span class="ml-2">Registrar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive-md" *ngIf="informacoesAcademica">
+            <table class="table table-striped">
+              <thead class="thead-light">
+                <tr>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-2">Curso</th>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-4">Situação</th>
+                  <th auto-contraste-destaque altera-fonte class="w-10" scope="col-1">Previsão de Conclusão</th>
+                  <th auto-contraste-destaque altera-fonte class="w-20 text-center" scope="col-2">Ação</th>
+                </tr>
+              </thead>
+              <tbody auto-contraste altera-fonte>
+                <tr *ngIf="informacoesAcademica.length == 0">
+                  <td colspan="7" class="bg-secondary text-center text-white font-weight-bold">
+                    <span>Não existem Informações Acadêmicas cadastradas</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of informacoesAcademica">
+                  <td>{{ item.curso }}</td>
+                  <td>{{ item.situacao.descricao }}</td>
+                  <td>{{ item.previsaoConclusao }}</td>
+                  <td class="text-center">
+                    <a auto-contraste-destaque class="btn btn-info text-white mr-2"
+                      (click)="editInformacoesAcademica(item.id)">
+                      <fa-icon class="imgBtn" icon="edit"></fa-icon><span class="ml-2">Editar</span>
+                    </a>
+                    <a auto-contraste-destaque class="btn btn-info text-white"
+                      (click)="openConfirmDialog(item.id, removeInformacoesAcademica.bind(this))">
+                      <fa-icon class="imgBtn" icon="trash"></fa-icon><span class="ml-2">Remover</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  <br><br>
+  <!-- FIM CARD Informações Acadêmicas -->
+
+    <!-- <pre>{{ modelForm.get('dadoEstagio').value | json }}</pre> -->
+    <!-- <pre>{{ modelFormDependente.value | json }}</pre> -->
+    <!-- <pre>{{ modelForm.value | json }}</pre> -->
+    <!-- <pre>{{ model | json }}</pre> -->
+    <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+  </div>
+</form>

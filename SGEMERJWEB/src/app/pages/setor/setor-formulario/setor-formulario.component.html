@@ -1,0 +1,36 @@
+<form [formGroup]="modelForm">
+  <div class="card" auto-contraste>
+    <div class="card-header" auto-contraste-destaque altera-fonte><h4>{{pageTitle}}</h4></div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-2" auto-contraste altera-fonte>
+          <label for="sigla">Sigla</label>
+          <input type="text" class="form-control text-uppercase" id="sigla" formControlName="sigla" [maxLength]="8" (keydown.space)="$event.preventDefault()" auto-contraste altera-fonte/>
+          <app-form-field-error [form-control]="modelForm.get('sigla')"></app-form-field-error>
+        </div>
+        <div class="form-group col-md-6" auto-contraste altera-fonte>
+          <label for="descricao">Descrição</label>
+          <input type="text" class="form-control" id="descricao" formControlName="descricao" auto-contraste altera-fonte/>
+          <app-form-field-error [form-control]="modelForm.get('descricao')"></app-form-field-error>
+        </div>
+        <div class="form-check form-check-inline col-md-3" altera-fonte>
+          <label class="switch mt-2" >
+            <input class="form-check-input ml-2" type="checkbox" id="ativo" formControlName="ativo">
+            <span class="slider round" auto-contraste></span>
+          </label>
+          &nbsp;&nbsp;{{modelForm.value.ativo ? "Ativo" : "Inativo"}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+  <button class="btn btn-primary float-right mt-3" [disabled]="submittingForm || modelForm.invalid"  (click)="submitForm()" auto-contraste-destaque altera-fonte>
+    <fa-icon class="imgBtn mr-2" icon="save"></fa-icon>Salvar
+  </button>
+  <button class="btn btn-primary float-right mt-3 mr-4" (click)="clear()" auto-contraste-destaque altera-fonte>
+    <fa-icon class="imgBtn mr-2" icon="eraser"></fa-icon>Limpar
+  </button>
+  <button type="button" class="btn btn-primary float-right mt-3 mr-4" (click)="return()" auto-contraste-destaque altera-fonte>
+    <fa-icon class="imgBtn mr-2" icon="arrow-left"></fa-icon>Voltar
+  </button>
+</form>

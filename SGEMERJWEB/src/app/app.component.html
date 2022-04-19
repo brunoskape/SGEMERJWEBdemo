@@ -1,0 +1,19 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#475b6f"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><h4 style=" color: white">Carregando...</h4></ngx-spinner
+>
+
+<app-header></app-header>
+<div class="container-fluid" auto-contraste-fundo  style=" height: auto !important; min-height: 93%; ">
+  <div class="row">
+    <app-menu></app-menu>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-2 mt-3">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+

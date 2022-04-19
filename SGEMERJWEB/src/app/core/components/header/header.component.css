@@ -1,0 +1,48 @@
+/*
+   * Navbar
+   */
+.navbar .navbar-toggler {
+  top: 0.25rem;
+  right: 1rem;
+}
+
+.nav-header-color {
+  background-color: #f5f5f5;
+}
+
+.nav-a-font {
+  text-decoration: none;
+  color: blue;
+  font-weight: 300;
+  font-size: smaller;
+}
+
+.nav-a-font:hover {
+  text-decoration: none;
+  font-weight: 400;
+  color: black;
+}
+
+.nav-a-font-key {
+  background-color: #475B6F;
+  color: #fff;
+  padding: 0 5px 0 5px;
+  line-height: 11px;  
+}
+
+.nav-link-dropdown {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+  font-size: smaller;
+}
+
+.nav-link-dropdown:hover {
+  color: black;
+  text-decoration: none;
+  
+}
+
+
+.logo-principal {
+  background: url(/assets/images/logo-principal.png) no-repeat;  
+}

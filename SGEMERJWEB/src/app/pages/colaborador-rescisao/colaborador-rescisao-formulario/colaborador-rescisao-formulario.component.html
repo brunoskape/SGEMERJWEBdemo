@@ -1,0 +1,91 @@
+<form [formGroup]="modelForm">
+ <div class="card" auto-contraste>
+    <div class="card-header" auto-contraste-destaque altera-fonte><h4>{{pageTitle}}</h4></div>
+    <div class="card-body">
+      <div  class="form-row">
+        <div class="form-group col-md-3">
+          <label for="nome"> Nome</label>
+          <input type="text" class="form-control" name="nome"
+           auto-contraste altera-fonte  [attr.disabled]="true" formControlName="nome">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="cpf"> CPF</label>
+          <input type="text" class="form-control" name="cpf"
+           auto-contraste altera-fonte mask="000.000.000-00" [attr.disabled]="true" formControlName="cpf">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="cpfNovo"> CPF Novo</label>
+          <input type="text" class="form-control" name="cpfNovo"
+           auto-contraste altera-fonte mask="000.000.000-00" [attr.disabled]="true" formControlName="cpfNovo">
+        </div>
+        <div class="form-group col-md-3" formGroupName="dadoTSVE" >
+          <label for="matricula"> Matricula</label>
+          <input type="text" class="form-control" name="cpf"
+           auto-contraste altera-fonte [attr.disabled]="true" id="matricula" formControlName="matricula">
+        </div>
+      </div>
+      <div class="form-row" formGroupName="rescisao">
+          <div class="form-group col-md-3">
+            <label for="dataTermino" auto-contraste altera-fonte class="form-control-plaintext">Data de
+              Término</label>
+            <input class="form-control" id="dataTermino" formControlName="dataTermino" type="text" auto-contraste
+              mask="d0/M0/0000" [dropSpecialCharacters]="false" />
+            <app-form-field-error [form-control]="modelForm.get('rescisao').get('dataTermino')">
+            </app-form-field-error>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="dtTermino" auto-contraste altera-fonte class="form-control-plaintext">Data fim
+              Quarentena</label>
+            <input class="form-control" id="dtTermino" formControlName="dataFimQuarentena" type="text" auto-contraste
+              mask="d0/M0/0000" [dropSpecialCharacters]="false" />
+            <app-form-field-error [form-control]="modelForm.get('rescisao').get('dataFimQuarentena')">
+            </app-form-field-error>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="numeroProcessoTrabalhista" auto-contraste altera-fonte class="form-control-plaintext">Número de
+              Processo de Trabalho</label>
+            <input class="form-control" id="numeroProcessoTrabalhista" type="text" formControlName="numeroProcessoTrabalhista"
+              mask="9{20}" auto-contraste />
+              <app-form-field-error [form-control]="modelForm.get('rescisao').get('numeroProcessoTrabalhista')">
+              </app-form-field-error>
+          </div>
+          <div class="form-group col-md-3 d-flex align-content-center flex-wrap mt-3">
+            <div class="form-check form-check-inline ml-3">
+              <label class="switch mt-2">
+                <input class="form-check-input ml-2" type="checkbox" id="indGuia" formControlName="indGuia">
+                <span class="slider round" auto-contraste></span>
+              </label>
+              <span class="ml-3">DAE - Documento de Arrecadação do eSocial</span>
+            </div>
+          </div>
+      </div>
+      <div class="form-row" formGroupName="rescisao">
+        <div class="form-group col-md-12" formGroupName="motivoRescisao">
+          <label for="motivoRescisao" auto-contraste altera-fonte class="form-control-plaintext">Motivo Rescisao</label>
+          <select class="form-control" auto-contraste altera-fonte formControlName="id" id="motivoRescisao">
+            <option *ngFor="let item of comboService.motivoRescisao" [value]="item.id">
+              {{item.idDescricaoText}}
+            </option>
+          </select>
+          <app-form-field-error [form-control]="modelForm.get('rescisao').get('motivoRescisao').get('id')" error-group="1">
+          </app-form-field-error>
+        </div>
+      </div>
+      <div class="form-row" >
+        <div class="form-group col-md-6" *ngIf="currentAction == 'alteracao'">             
+          <label for="protocolo" auto-contraste altera-fonte class="form-control-plaintext">Recibo</label>
+          <input class="form-control" id="protocolo" type="text" formControlName="protocolo" auto-contraste mask="9{1}.9{1}.9{19}" [dropSpecialCharacters]="false"/>
+          <app-form-field-error [form-control]="modelForm.get('protocolo')">
+          </app-form-field-error>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-server-error-messages [server-error-messages]="serverErrorMessages"></app-server-error-messages>
+  <button class="btn btn-primary float-right mt-3" [disabled]="submittingForm || modelForm.invalid"  (click)="submitForm()" auto-contraste-destaque altera-fonte>
+    <fa-icon class="imgBtn mr-2" icon="save"></fa-icon>Salvar
+  </button>
+  <button type="button" class="btn btn-primary float-right mt-3 mr-4" (click)="return()" auto-contraste-destaque altera-fonte>
+    <fa-icon class="imgBtn mr-2" icon="arrow-left"></fa-icon>Voltar
+  </button> 
+</form>

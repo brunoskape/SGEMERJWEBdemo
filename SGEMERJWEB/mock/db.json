@@ -1,0 +1,228 @@
+{
+  "setores": [
+    {
+      "id": 1,
+      "sigla": "TI",
+      "descricao": "Informatica",
+      "ativo": "true"
+    },
+    {
+      "id": 2,
+      "sigla": "Adm",
+      "descricao": "Administrativo",
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 3,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 4,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 5,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 6,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 7,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 8,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 9,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 10,
+      "ativo": "true"
+    },
+    {
+      "descricao": "hurra",
+      "sigla": "ha",
+      "id": 11,
+      "ativo": "true"
+    },
+    {
+      "id": 12,
+      "sigla": "TI",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 13,
+      "sigla": "SPGE",
+      "descricao": "MAGISTRADO",
+      "ativo": true
+    },
+    {
+      "id": 14,
+      "sigla": "SPGE",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 15,
+      "sigla": "SPGE",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 16,
+      "sigla": "SPGE",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 17,
+      "sigla": "SPGE",
+      "descricao": "MAGISTRADO",
+      "ativo": true
+    },
+    {
+      "id": 18,
+      "sigla": "SPGE",
+      "descricao": "MAGISTRADO",
+      "ativo": false
+    },
+    {
+      "id": 21,
+      "sigla": "SPGE",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 24,
+      "sigla": "NGX",
+      "descricao": "ANGULAR",
+      "ativo": true
+    },
+    {
+      "id": 25,
+      "sigla": "TI",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 26,
+      "sigla": "aa",
+      "descricao": "alunas",
+      "ativo": true
+    },
+    {
+      "id": 27,
+      "sigla": "EMERJ",
+      "descricao": "ESCOLA",
+      "ativo": true
+    },
+    {
+      "id": 28,
+      "sigla": "NGX",
+      "descricao": "ANGULAR",
+      "ativo": false
+    },
+    {
+      "id": 29,
+      "sigla": "AAA",
+      "descricao": "TESTE ATIVO",
+      "ativo": true
+    },
+    {
+      "id": 30,
+      "sigla": "HA",
+      "descricao": "HURRA",
+      "ativo": false
+    },
+    {
+      "id": 31,
+      "sigla": "TEC",
+      "descricao": "ANGULAR",
+      "ativo": true
+    },
+    {
+      "id": 32,
+      "sigla": "BBB",
+      "descricao": "teste",
+      "ativo": true
+    },
+    {
+      "id": 33,
+      "sigla": "TI",
+      "descricao": "ANGULAR",
+      "ativo": true
+    },
+    {
+      "id": 34,
+      "sigla": "SPGe",
+      "descricao": "Pós Graduação",
+      "ativo": true
+    },
+    {
+      "id": 35,
+      "sigla": "Ti",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 36,
+      "sigla": "Ti",
+      "descricao": "tecnologia",
+      "ativo": true
+    },
+    {
+      "id": 37,
+      "sigla": "SPGEa",
+      "descricao": "teste",
+      "ativo": false
+    }
+  ],
+  "colaboradores": [
+    {
+      "id": 1,
+      "nome": "Colaborador Modelo 1",
+      "tipoColaborador": 1,
+      "cpf": "11965793770"
+    },
+    {
+      "id": 2,
+      "nome": "Colaborador Modelo 2",
+      "tipoColaborador": 2,
+      "cpf": "11965793770"
+    },
+    {
+      "id": 3,
+      "nome": "Colaborador Modelo 3",
+      "tipoColaborador": 1,
+      "cpf": "24799186027"
+    },
+    {
+      "id": 4,
+      "nome": "Colaborador Modelo 4",
+      "tipoColaborador": 2,
+      "cpf": "00252811003"
+    }
+  ]
+}

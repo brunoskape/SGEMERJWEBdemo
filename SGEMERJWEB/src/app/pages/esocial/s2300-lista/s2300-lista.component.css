@@ -1,0 +1,17 @@
+
+@media(max-width:1124px) {
+    .imgBtn { font-size: 16px; }
+    .btn { font-size: 0px; }
+}
+
+#anterior #proximo{
+    pointer-events:none;
+}
+
+.page-link-cursor{
+    cursor: pointer;
+}
+
+.row-gray {
+    background-color: #e9ecef   
+}

@@ -1,0 +1,115 @@
+<div class="card mb-3" auto-contraste>
+    <div class="card-header" auto-contraste-destaque altera-fonte>
+        <h4>Colaboradores Cadastrados</h4>
+    </div>
+    <div class="card-body">
+        <div class="form-row d-flex justify-content-center">
+            <div class="form-group col-md-2">
+                <div class="input-group">
+                    <label class="mt-2 mr-1"auto-contraste altera-fonte>Tipo</label>
+                    <select class="form-control" auto-contraste altera-fonte [(ngModel)]="filtroTipoColaborador">
+                        <option *ngFor="let tipoColaborador of comboService.tiposColaborador; let i = index"
+                            [value]="tipoColaborador.id">
+                            {{tipoColaborador.descricao.replace("Selecione","Todos")}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" placeholder="Nome" name="nome" [(ngModel)]="filtroNome"
+                    auto-contraste altera-fonte>
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control" placeholder="CPF" name="cpf" [(ngModel)]="filtroCpf"
+                    auto-contraste altera-fonte mask="000.000.000-00">
+            </div>
+            <div class="form-group col-md-5">
+                <button auto-contraste-destaque altera-fonte class="btn btn-primary ml-3" (click)="search()">
+                    <fa-icon class="imgBtn" icon="search"></fa-icon>&nbsp;Consultar
+                </button>
+                <button auto-contraste-destaque altera-fonte type="button" class="btn btn-primary  ml-3"
+                    (click)="clear()">
+                    <fa-icon class="imgBtn" icon="eraser"></fa-icon>&nbsp;Limpar
+                </button>
+                <button auto-contraste-destaque altera-fonte class="btn btn-info ml-3" (click)="new()">
+                    <fa-icon class="imgBtn" icon="plus"></fa-icon>&nbsp;Inserir
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive-md" *ngIf="colaboradores">
+    <table class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th auto-contraste-destaque altera-fonte class="w-20" scope="col-2" (click)="sort('tipo')">Tipo&nbsp;
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th auto-contraste-destaque altera-fonte class="w-40" scope="col-4" (click)="sort('nome')">Nome&nbsp;
+                    <fa-icon icon="sort">
+                    </fa-icon>
+                </th>
+                <th auto-contraste-destaque altera-fonte class="w-10" (click)="sort('cpf')" scope="col-1">
+                    CPF&nbsp;<fa-icon icon="sort">
+                    </fa-icon>
+                </th>
+                <th auto-contraste-destaque altera-fonte class="w-10 text-center" (click)="sort('cpf')" scope="col-1">
+                    Ativo&nbsp;<fa-icon icon="sort">
+                    </fa-icon>
+                </th>
+                <th auto-contraste-destaque altera-fonte class="w-20" scope="col-2">Ação</th>
+            </tr>
+        </thead>
+        <tbody auto-contraste altera-fonte>
+            <tr *ngIf="colaboradores.length == 0">
+                <td colspan="5" class="bg-secondary text-center text-white font-weight-bold">
+                    <span>Não existe registros com os dados informado</span>
+                </td>
+            </tr>
+            <tr *ngFor="let colaborador of  colaboradores | orderBy:key: desc  | paginate: config">
+                <td>{{colaborador.tipo.descricao }}</td>
+                <td>{{colaborador.nome }}</td>
+                <td>{{colaborador.cpf | mask: '000.000.000-00' }}</td>
+                <td class="text-center">
+                    <fa-icon [icon]="colaborador.ativo ? 'toggle-on' : 'toggle-off'" size="lg"
+                        [ngClass]="colaborador.ativo ? 'text-primary' : 'text-secondary'" auto-contraste>
+                    </fa-icon>
+                </td>
+                <td>
+                    <a auto-contraste-destaque class="btn btn-info text-white mr-2" (click)="edit(colaborador)" title="Editar">
+                        <fa-icon class="imgBtn" icon="user-edit"></fa-icon>
+                    </a>
+                    <a *ngIf="colaborador.tipo.id == 1"  auto-contraste-destaque class="btn btn-warning text-white" (click)="rescisao(colaborador)" title="Rescisão">
+                        <fa-icon class="imgBtn" icon="sign-out-alt"></fa-icon>
+                    </a>
+                </td>
+            </tr>
+            <tr *ngIf="colaboradores.length != 0">
+                <td colspan="5">
+                    <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="onPageChange($event)">
+                        <ul class="pagination d-flex justify-content-center">
+                            <li class="page-item" [class.disabled]="p.isFirstPage()">
+                                <a auto-contraste-destaque class="page-link page-link-cursor" (click)="p.previous()">
+                                    <fa-icon icon="arrow-circle-left"></fa-icon>
+                                </a>
+                            </li>
+                            <li class="page-item" *ngFor="let page of p.pages"
+                                [class.active]="p.getCurrent() === page.value">
+                                <a auto-contraste-destaque (click)="p.setCurrent(page.value)"
+                                    *ngIf="p.getCurrent() !== page.value" class="page-link page-link-cursor">{{ page.label }}</a>
+                                <div *ngIf="p.getCurrent() === page.value">
+                                    <a auto-contraste-destaque class="page-link page-link-cursor active">{{ page.label }}</a>
+                                </div>
+                            </li>
+                            <li class="page-item" [class.disabled]="p.isLastPage()">
+                                <a auto-contraste-destaque class="page-link page-link-cursor" (click)="p.next()">
+                                    <fa-icon icon="arrow-circle-right"></fa-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </pagination-template>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

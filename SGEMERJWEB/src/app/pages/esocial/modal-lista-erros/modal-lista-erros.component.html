@@ -1,0 +1,22 @@
+<table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th auto-contraste-destaque altera-fonte class="w-10" scope="col-2">
+          Identificador
+        </th>
+        <th auto-contraste-destaque altera-fonte class="w-10" scope="col-4">
+          Código Erro
+        </th>
+        <th auto-contraste-destaque altera-fonte class="w-10" scope="col-1">
+          Mensagem
+        </th>
+      </tr>
+    </thead>
+    <tbody auto-contraste altera-fonte>
+      <tr *ngFor="let item of eventos">
+        <td>{{item.identificador }}</td>
+        <td>{{item.codigoErro }}</td>
+        <td>{{item.mensagem}}</td>
+      </tr>
+    </tbody>
+  </table>

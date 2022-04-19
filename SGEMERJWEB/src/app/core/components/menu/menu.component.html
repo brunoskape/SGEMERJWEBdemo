@@ -1,0 +1,25 @@
+<nav
+  id="sidebarMenu"
+  class="col-md-3 col-lg-2 d-md-block bg-light sidebar overflow-auto collapse"
+>
+  <div class="sidebar-sticky pt-3 sidebar-color" auto-contraste>
+    <div
+      class="m-2 mt-5 border border-light border-top-0 border-right-0 border-left-0 mb-3"
+    >
+      <span
+        class="nav-info-sys font-weight-bold"
+        auto-contraste-destaque
+        altera-fonte
+        >{{ nomeDoSistema }}</span
+      >
+      <span class="nav-info-sys" auto-contraste-destaque altera-fonte>
+        {{ descricaoSistema }}
+      </span>
+    </div>
+
+    <div id="MenuItens" style>
+      <app-menu-item parent="MenuItens" [item]="itemDoMenu" *ngFor="let itemDoMenu of menuService.menus" auto-contraste altera-fonte></app-menu-item>
+    </div>
+
+  </div>
+</nav>

@@ -1,0 +1,30 @@
+<table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th auto-contraste-destaque altera-fonte class="w-10" scope="col-2">
+          Data envio
+        </th>
+        <th auto-contraste-destaque altera-fonte class="w-10" scope="col-4">
+          Referencia
+        </th>
+        <th auto-contraste-destaque altera-fonte class="w-10" scope="col-1">
+          Campo Esocial
+        </th>
+        <th auto-contraste-destaque altera-fonte class="w-20 text-center" scope="col-2">
+          Valor informado
+        </th>
+        <th auto-contraste-destaque altera-fonte class="w-20 text-center" scope="col-2">
+          Mensagem
+        </th>
+      </tr>
+    </thead>
+    <tbody auto-contraste altera-fonte>
+      <tr *ngFor="let item of eventos">
+        <td>{{item.dataEnvio }}</td>
+        <td>{{item.referencia }}</td>
+        <td>{{item.campo}}</td>
+        <td>{{item.valor}}</td>
+        <td>{{item.mensagem}}</td>
+      </tr>
+    </tbody>
+  </table>

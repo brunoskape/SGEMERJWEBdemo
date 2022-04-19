@@ -1,0 +1,195 @@
+<nav
+  class="navbar sticky-top flex-md-nowrap p-3 shadow nav-header-color navbar-light"
+  auto-contraste
+>
+  
+  <picture>
+    <source media="(min-width:767.98px)" srcset="./assets/images/logo-principal.png">
+    <img src="./assets/images/logo-principal-small.png" alt="Logo" style="width:auto;">
+  </picture>
+
+  <div class="d-md-block align-left">
+    <span auto-contraste
+      class="badge badge-danger mr-3"
+      *ngIf="!production && (ambiente == 'Desenvolvimento')"
+      style="font-size: 100%"> {{ ambiente | uppercase }} </span>
+    <span auto-contraste
+      class="badge badge-warning mr-3"
+      *ngIf="!production && (ambiente == 'Homologação')"
+      style="font-size: 100%"> {{ ambiente | uppercase }} </span>
+    <a
+      accesskey="1"
+      href="#iniciodomenu"
+      class="nav-a-font"
+      auto-contraste-destaque
+      ><span class="nav-a-font-key mr-1" auto-contraste-destaque>1</span>Ir para
+      o Menu</a
+    >
+    <a
+      accesskey="2"
+      href="#iniciodoconteudo"
+      class="nav-a-font px-2"
+      auto-contraste-destaque
+      ><span class="nav-a-font-key mr-1" auto-contraste-destaque>2</span>Ir para
+      o Conteúdo</a
+    >
+    <span class="px-3">|</span>
+    <a
+      *ngIf="!autoContrasteService.exibeAutoContraste"
+      [routerLink]=""
+      title="Contraste"
+      alt="Contraste"
+      (click)="autoContrasteService.alterarAutoContraste()"
+      class="nav-a-font px-1"
+      auto-contraste-destaque
+      ><fa-icon icon="adjust" class="mr-1"></fa-icon>Alto Contraste</a
+    >
+
+    <a
+      *ngIf="autoContrasteService.exibeAutoContraste"
+      [routerLink]=""
+      title="Contraste"
+      alt="Contraste"
+      (click)="autoContrasteService.alterarAutoContraste()"
+      class="nav-a-font px-1"
+      auto-contraste-destaque
+      ><fa-icon icon="adjust" class="mr-1"></fa-icon>Contraste Padrão</a
+    >
+
+    <span class="px-3">|</span>
+    <a
+      href="#"
+      title="Aumentar Fonte"
+      alt="Aumentar"
+      onclick="aumentarTamanhoFonte();return false;"
+      class="nav-a-font px-1"
+      auto-contraste-destaque
+      >A+</a
+    >
+
+    <a
+      href="#"
+      title="Diminuir Fonte"
+      alt="Diminuir"
+      onclick="normalizarTamanhoFonte();return false;"
+      class="nav-a-font px-1"
+      auto-contraste-destaque
+      >A</a
+    >
+
+    <a
+      href="#"
+      title="Diminuir Fonte"
+      alt="Diminuir"
+      onclick="diminuirTamanhoFonte();return false;"
+      class="nav-a-font px-1"
+      auto-contraste-destaque
+      >A-</a
+    >
+  </div>
+
+  <div class="dropdown show" *ngIf="!autenticacao.usuarioLogado">
+    <a 
+      auto-contraste
+      href="#"
+      (click)="autenticacao.redirecionarParaAutenticar()"
+      data-toggle="dropdown"
+      class="nav-a-font px-1"
+    >
+      <fa-icon icon="user" class="mr-1" auto-contraste></fa-icon>Acessar
+    </a>
+    </div>
+
+
+  <div class="dropdown show" *ngIf="autenticacao.usuarioLogado">
+    <a 
+      class="dropdown-toggle nav-link-dropdown"
+      auto-contraste
+      href="#"
+      id="dropdownMenuLink"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <fa-icon icon="user" class="mr-1" auto-contraste></fa-icon>{{autenticacao.usuarioLogado.nome}}
+    </a>
+
+    <div
+      class="dropdown-menu dropdown-menu-right"
+      auto-contraste
+      aria-labelledby="dropdownMenuLink"
+    >
+      <a
+        data-toggle="modal"
+        data-target="#aboutModal"
+        class="dropdown-item"
+        auto-contraste
+        href="#"
+        ><fa-icon icon="info" class="mr-3"></fa-icon>Sobre o Sistema</a
+      >
+      <hr />
+      <a class="dropdown-item" auto-contraste (click)="logout()" onclick="return false" href="#"
+        ><fa-icon icon="sign-out-alt" class="mr-2"></fa-icon>Sair do Sistema</a
+      >
+    </div>
+  </div>
+
+  <button
+    class="navbar-toggler d-md-none collapsed"
+    type="button"
+    data-toggle="collapse"
+    data-target="#sidebarMenu"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    auto-contraste-destaque
+  >
+    <span class="navbar-toggler-icon" auto-contraste-destaque></span>
+  </button>
+</nav>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="aboutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="aboutModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutModalLabel">Sobre o Sistema</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <b>{{ siglaDoSistema }}</b>
+        </p>
+        <br />
+        <p>{{ descricaoSistema }}</p>
+        <p>Versão: {{ version }}</p>
+        <p>Versão da API: {{ apiVersion }}</p>
+        <p>Poder Judiciário Estado do Rio de Janeiro</p>
+        <p>Todos os direitos reservados ® {{ year }}</p>
+        <p>
+          Para melhor funcionamento do sistema, recomendamos a utilização dos
+          navegadores Google Chrome ou Mozilla Firefox
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
